@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      Application defines IApplicationDbContext using DbSet<T> so Infrastructure/EF Core
+      can be swapped without touching this layer's business logic. That still requires a
+      reference to the EF Core package itself for the DbSet<T> type to resolve - this is
+      the one place Application "leaks" an EF Core dependency, and it's a deliberate,
+      documented trade-off, not an architecture violation of intent (Application still has
+      zero dependency on Infrastructure, migrations, or any provider-specific package like
+      Sqlite).
+    -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MusicDistribution.Domain\MusicDistribution.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
