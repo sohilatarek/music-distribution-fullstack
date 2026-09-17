@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 using MusicDistribution.Application.Common.Exceptions;
 
 namespace MusicDistribution.Api.Middleware;
@@ -33,6 +34,14 @@ public class ExceptionHandlingMiddleware
         {
             await WriteAsync(context, HttpStatusCode.BadRequest, ex.Message);
         }
+        catch (DbUpdateException ex) when (IsUniqueConstraintViolation(ex))
+        {
+            // Safety net for races that slip past the service-level uniqueness checks.
+            _logger.LogWarning(ex, "Unique constraint violated on {Method} {Path}",
+                context.Request.Method, context.Request.Path);
+            await WriteAsync(context, HttpStatusCode.Conflict,
+                "A record with the same unique value already exists.");
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unhandled exception while processing {Method} {Path}",
@@ -41,6 +50,9 @@ public class ExceptionHandlingMiddleware
                 "An unexpected error occurred. Please try again later.");
         }
     }
+
+    private static bool IsUniqueConstraintViolation(DbUpdateException ex) =>
+        ex.InnerException?.Message.Contains("UNIQUE constraint failed", StringComparison.OrdinalIgnoreCase) == true;
 
     private static async Task WriteAsync(HttpContext context, HttpStatusCode statusCode, string message)
     {

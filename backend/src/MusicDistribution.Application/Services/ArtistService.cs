@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MusicDistribution.Application.Common.Exceptions;
 using MusicDistribution.Application.DTOs;
 using MusicDistribution.Application.Interfaces;
 using MusicDistribution.Domain.Entities;
@@ -16,10 +17,18 @@ public class ArtistService : IArtistService
 
     public async Task<ArtistResponse> CreateAsync(CreateArtistRequest request, CancellationToken ct = default)
     {
+        var email = request.Email.Trim();
+
+        var emailTaken = await _db.Artists.AnyAsync(a => a.Email.ToLower() == email.ToLower(), ct);
+        if (emailTaken)
+        {
+            throw new ValidationAppException($"An artist with email '{email}' already exists.");
+        }
+
         var artist = new Artist
         {
             Name = request.Name.Trim(),
-            Email = request.Email.Trim(),
+            Email = email,
             Country = request.Country.Trim()
         };
 
