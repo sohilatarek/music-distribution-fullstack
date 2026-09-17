@@ -1,0 +1,27 @@
+<div class="app">
+  <header class="app-header">
+    <a routerLink="/" class="app-title">🎵 Music Distribution — Track Manager</a>
+
+    <div class="login-bar" *ngIf="auth.isAuthenticated()">
+      <span class="badge badge-live">Authenticated</span>
+      <button (click)="logout()">Log out</button>
+    </div>
+
+    <form class="login-bar" *ngIf="!auth.isAuthenticated()" (ngSubmit)="login()">
+      <input placeholder="username" [ngModel]="username()" (ngModelChange)="username.set($event)" name="username" />
+      <input
+        placeholder="password"
+        type="password"
+        [ngModel]="password()"
+        (ngModelChange)="password.set($event)"
+        name="password"
+      />
+      <button type="submit">Log in</button>
+      <span class="error-text" *ngIf="loginError()">{{ loginError() }}</span>
+    </form>
+  </header>
+
+  <main class="app-main">
+    <router-outlet></router-outlet>
+  </main>
+</div>
