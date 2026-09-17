@@ -1,0 +1,81 @@
+<p><a routerLink="/">&larr; Back to tracks</a></p>
+
+<p *ngIf="store.loading()">Loading track…</p>
+<p *ngIf="store.error()" class="error-text">{{ store.error() }}</p>
+
+<ng-container *ngIf="!store.loading() && !store.error() && store.track() as t">
+  <h2>{{ t.title }}</h2>
+  <dl class="detail-grid">
+    <dt>Artist</dt>
+    <dd>{{ t.artistName }}</dd>
+    <dt>ISRC</dt>
+    <dd>{{ t.isrc }}</dd>
+    <dt>Genre</dt>
+    <dd>{{ t.genre }}</dd>
+    <dt>Release date</dt>
+    <dd>{{ t.releaseDate | date: 'mediumDate' }}</dd>
+    <dt>Status</dt>
+    <dd><span class="badge" [ngClass]="'badge-' + t.status">{{ t.status }}</span></dd>
+  </dl>
+
+  <section>
+    <h3>Update status</h3>
+    <p class="muted" *ngIf="!auth.isAuthenticated()">Log in (top right) to change status.</p>
+    <div class="button-row">
+      <button
+        *ngFor="let s of statuses"
+        [disabled]="!auth.isAuthenticated() || store.submitting() || t.status === s"
+        (click)="changeStatus(s)"
+      >
+        Mark {{ s }}
+      </button>
+    </div>
+  </section>
+
+  <section>
+    <h3>DSP distributions</h3>
+    <p class="muted" *ngIf="t.distributions.length === 0">Not distributed to any DSP yet.</p>
+
+    <table class="track-table" *ngIf="t.distributions.length > 0">
+      <thead>
+        <tr>
+          <th>DSP</th>
+          <th>Status</th>
+          <th>Submitted at</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of t.distributions">
+          <td>{{ d.dspName }}</td>
+          <td><span class="badge" [ngClass]="'badge-' + d.status">{{ d.status }}</span></td>
+          <td>{{ d.submittedAt | date: 'medium' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="distribute-panel" *ngIf="store.undistributedDsps().length > 0">
+      <p>
+        <span class="muted" *ngIf="!auth.isAuthenticated()">Log in to submit to a DSP. </span>Submit to:
+      </p>
+      <div class="button-row">
+        <label class="checkbox-pill" *ngFor="let d of store.undistributedDsps()">
+          <input
+            type="checkbox"
+            [disabled]="!auth.isAuthenticated()"
+            [checked]="store.selectedDsps().includes(d.id)"
+            (change)="store.toggleDsp(d.id)"
+          />
+          {{ d.name }}
+        </label>
+      </div>
+      <button
+        [disabled]="!auth.isAuthenticated() || store.submitting() || store.selectedDsps().length === 0"
+        (click)="distribute()"
+      >
+        Distribute
+      </button>
+    </div>
+
+    <p *ngIf="store.actionError()" class="error-text">{{ store.actionError() }}</p>
+  </section>
+</ng-container>
