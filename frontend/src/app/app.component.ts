@@ -15,14 +15,22 @@ export class AppComponent {
   username = signal('admin');
   password = signal('');
   loginError = signal<string | null>(null);
+  submitting = signal(false);
 
   constructor(public auth: AuthService) {}
 
   login(): void {
     this.loginError.set(null);
+    this.submitting.set(true);
     this.auth.login(this.username(), this.password()).subscribe({
-      next: () => this.password.set(''),
-      error: (err) => this.loginError.set(err.error?.message ?? 'Login failed')
+      next: () => {
+        this.password.set('');
+        this.submitting.set(false);
+      },
+      error: (err) => {
+        this.loginError.set(err.error?.message ?? 'Login failed');
+        this.submitting.set(false);
+      }
     });
   }
 

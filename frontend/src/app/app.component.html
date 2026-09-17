@@ -2,22 +2,39 @@
   <header class="app-header">
     <a routerLink="/" class="app-title">🎵 Music Distribution — Track Manager</a>
 
-    <div class="login-bar" *ngIf="auth.isAuthenticated()">
-      <span class="badge badge-live">Authenticated</span>
-      <button (click)="logout()">Log out</button>
+    <div class="session" *ngIf="auth.isAuthenticated()">
+      <span class="badge badge-live">Signed in</span>
+      <button type="button" class="btn-ghost" (click)="logout()">Log out</button>
     </div>
 
     <form class="login-bar" *ngIf="!auth.isAuthenticated()" (ngSubmit)="login()">
-      <input placeholder="username" [ngModel]="username()" (ngModelChange)="username.set($event)" name="username" />
-      <input
-        placeholder="password"
-        type="password"
-        [ngModel]="password()"
-        (ngModelChange)="password.set($event)"
-        name="password"
-      />
-      <button type="submit">Log in</button>
-      <span class="error-text" *ngIf="loginError()">{{ loginError() }}</span>
+      <div class="field">
+        <label for="username">Username</label>
+        <input
+          id="username"
+          name="username"
+          autocomplete="username"
+          placeholder="admin"
+          [ngModel]="username()"
+          (ngModelChange)="username.set($event)"
+        />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="••••••••"
+          [ngModel]="password()"
+          (ngModelChange)="password.set($event)"
+        />
+      </div>
+      <button type="submit" [disabled]="submitting() || !password()">
+        {{ submitting() ? 'Signing in…' : 'Log in' }}
+      </button>
+      <span class="login-error" *ngIf="loginError()" role="alert">{{ loginError() }}</span>
     </form>
   </header>
 

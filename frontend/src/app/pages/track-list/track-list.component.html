@@ -12,8 +12,8 @@
   </span>
 </div>
 
-<p *ngIf="store.loading()">Loading tracks…</p>
-<p *ngIf="store.error()" class="error-text">{{ store.error() }}</p>
+<p class="notice" *ngIf="store.loading()">Loading tracks…</p>
+<p class="notice notice-error" *ngIf="store.error()" role="alert">{{ store.error() }}</p>
 
 <table class="track-table" *ngIf="!store.loading() && !store.error()">
   <thead>
