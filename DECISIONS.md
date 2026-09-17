@@ -48,6 +48,15 @@ list or a 500.
 I pulled the JWT key and admin password out of `appsettings.json` entirely and added a startup check
 that fails fast if the signing key is missing or under 32 characters.
 
+The database engine was actually the model's suggestion, not something the brief asked for. The
+task just says EF Core with proper migrations, it doesn't name a provider. Claude picked SQLite so
+anyone pulling the repo can run it with zero setup, no SQL Server instance, no Docker, no connection
+string to fill in first. I went along with it after checking that it doesn't cost anything real:
+everything goes through EF Core and `IApplicationDbContext`, so switching to SQL Server or Postgres
+later is a one-line change (`UseSqlite` to `UseSqlServer`) plus a new connection string, nothing in
+the entities, DTOs or services would need to touch. For a take-home that has to run on someone
+else's machine with no setup instructions beyond a README, that trade-off made sense to keep.
+
 On migrations: I wrote the migration files by hand initially, because I didn't have the .NET SDK
 available to run `dotnet ef migrations add`. I've since verified them properly. They apply to a
 clean database, the app starts and seeds with no errors, and running `dotnet ef migrations add` on
