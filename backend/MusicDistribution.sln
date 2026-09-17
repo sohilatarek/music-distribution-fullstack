@@ -1,0 +1,39 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicDistribution.Domain", "src\MusicDistribution.Domain\MusicDistribution.Domain.csproj", "{B9F94C42-9A1E-4185-B203-031725D41F71}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicDistribution.Application", "src\MusicDistribution.Application\MusicDistribution.Application.csproj", "{EC60408E-632C-4C54-8FF4-BC8413478E8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicDistribution.Infrastructure", "src\MusicDistribution.Infrastructure\MusicDistribution.Infrastructure.csproj", "{6883DC25-4AFC-4372-87D3-D0636AE43F09}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicDistribution.Api", "src\MusicDistribution.Api\MusicDistribution.Api.csproj", "{2C2BC75E-39B2-427A-8A97-6805769CF832}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9F94C42-9A1E-4185-B203-031725D41F71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9F94C42-9A1E-4185-B203-031725D41F71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9F94C42-9A1E-4185-B203-031725D41F71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9F94C42-9A1E-4185-B203-031725D41F71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC60408E-632C-4C54-8FF4-BC8413478E8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC60408E-632C-4C54-8FF4-BC8413478E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC60408E-632C-4C54-8FF4-BC8413478E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC60408E-632C-4C54-8FF4-BC8413478E8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6883DC25-4AFC-4372-87D3-D0636AE43F09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6883DC25-4AFC-4372-87D3-D0636AE43F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6883DC25-4AFC-4372-87D3-D0636AE43F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6883DC25-4AFC-4372-87D3-D0636AE43F09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C2BC75E-39B2-427A-8A97-6805769CF832}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C2BC75E-39B2-427A-8A97-6805769CF832}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C2BC75E-39B2-427A-8A97-6805769CF832}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C2BC75E-39B2-427A-8A97-6805769CF832}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

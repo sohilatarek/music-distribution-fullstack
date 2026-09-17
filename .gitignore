@@ -1,0 +1,20 @@
+## .NET
+bin/
+obj/
+*.user
+*.db
+*.db-shm
+*.db-wal
+
+## Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+## IDE
+.vs/
+.vscode/
+.idea/
+
+## OS
+.DS_Store
