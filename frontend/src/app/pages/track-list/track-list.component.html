@@ -1,0 +1,40 @@
+<div class="toolbar">
+  <h2>Tracks</h2>
+  <label>
+    Status:
+    <select [ngModel]="store.statusFilter()" (ngModelChange)="onStatusFilterChange($event)">
+      <option *ngFor="let opt of statusOptions" [value]="opt.value">{{ opt.label }}</option>
+    </select>
+  </label>
+  <span class="muted">
+    {{ store.tracks().length }} track{{ store.tracks().length === 1 ? '' : 's' }} ·
+    {{ store.genreCount() }} genre{{ store.genreCount() === 1 ? '' : 's' }}
+  </span>
+</div>
+
+<p *ngIf="store.loading()">Loading tracks…</p>
+<p *ngIf="store.error()" class="error-text">{{ store.error() }}</p>
+
+<table class="track-table" *ngIf="!store.loading() && !store.error()">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Artist</th>
+      <th>Genre</th>
+      <th>Status</th>
+      <th>Release date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let track of store.tracks()">
+      <td><a [routerLink]="['/tracks', track.id]">{{ track.title }}</a></td>
+      <td>{{ track.artistName }}</td>
+      <td>{{ track.genre }}</td>
+      <td><span class="badge" [ngClass]="'badge-' + track.status">{{ track.status }}</span></td>
+      <td>{{ track.releaseDate | date: 'mediumDate' }}</td>
+    </tr>
+    <tr *ngIf="store.tracks().length === 0">
+      <td colspan="5" class="muted">No tracks match this filter.</td>
+    </tr>
+  </tbody>
+</table>
